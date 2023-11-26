@@ -21,14 +21,14 @@ public class Client {
 	private String password;
 	private String email;
 	private String localite;
-    //List<Categorie> centreInteret = new ArrayList<>();
+    private Categorie centreInteret;
     
 
     //Constructeurs
     public Client() {
     }
 
-	public Client(Integer numc, String nom, String prenom, String login, String password, String email, String localite) {
+	public Client(Integer numc, String nom, String prenom, String login, String password, String email, String localite, Categorie centreInteret) {
 		super();
 		this.numc = numc;
 		this.nom = nom;
@@ -37,6 +37,6 @@ public class Client {
 		this.password = password;
 		this.email = email;
 		this.localite = localite;
-		//this.centreInteret = centreInteret;
+		this.centreInteret = centreInteret;
 	}
 }
