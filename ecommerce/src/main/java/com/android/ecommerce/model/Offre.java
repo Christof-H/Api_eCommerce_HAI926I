@@ -35,7 +35,7 @@ public class Offre {
 	
 //Relation Offre * <--> 1 Fournisseur
     @ManyToOne(targetEntity = Fournisseur.class)
-    @JoinColumn(name="numf")    
+    @JoinColumn(name="numfourn")    
     private Fournisseur fournisseur;
 	
 

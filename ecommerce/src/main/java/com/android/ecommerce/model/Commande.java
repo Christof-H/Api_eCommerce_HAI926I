@@ -37,16 +37,15 @@ public class Commande {
     
   //Relation Commande * <--> 1 Client
     @ManyToOne(targetEntity = Client.class)
-    @JoinColumn(name="numc")    
+    @JoinColumn(name="numclient")    
     private Client client;
     
   //Relation Commande * <--> * Produit
-//    @ManyToMany
-//    @JoinTable( name = "t_associea",
-//    joinColumns = @JoinColumn( name = "numc" ),
-//    inverseJoinColumns = @JoinColumn( name = "codem" ) )
-//	private List<Monument> listMonument = new ArrayList<>();
-    //private ArrayList<Produit> list_produit = new ArrayList<>();
+    @ManyToMany
+    @JoinTable( name = "prod_in_com",
+    joinColumns = @JoinColumn( name = "idc" ),
+    inverseJoinColumns = @JoinColumn( name = "idp" ) )
+    private ArrayList<Produit> list_produit = new ArrayList<>();
 
     //Constructeurs
     public Commande(){}

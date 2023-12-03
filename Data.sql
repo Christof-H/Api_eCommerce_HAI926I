@@ -27,14 +27,14 @@ create table t_fournisseur (numf integer not null auto_increment,
 */
 
 
-INSERT INTO t_client (numc, nom, prenom, login, password, email, localite, centre_interet) VALUES 
+INSERT INTO t_client (nom, prenom, login, password, email, localite, centre_interet) VALUES 
 ('Dubois', 'Sophie', 'sophie_dubois', 'mdpSophie123', 'sophie.dubois@example.com', 'Paris', 'COSMETIQUE'),
 ('Martin', 'Pierre', 'pierre_martin', 'mdpPierre456', 'pierre.martin@example.com', 'Lyon', 'VETEMENT'),
 ('Lefèvre', 'Marie', 'marie_lefevre', 'mdpMarie789', 'marie.lefevre@example.com', 'Marseille', 'JOUET'),
 ('Thomas', 'Jean', 'jean_thomas', 'mdpJean012', 'jean.thomas@example.com', 'Toulouse', 'COSMETIQUE'),
 ('Richard', 'Julie', 'julie_richard', 'mdpJulie345', 'julie.richard@example.com', 'Bordeaux', 'VETEMENT'),
 ('Petit', 'Nicolas', 'nicolas_petit', 'mdpNicolas678', 'nicolas.petit@example.com', 'Lille', 'COSMETIQUE'),
-('Durand', 'Emma', 'emma_durand', 'mdpEmma901', 'emma.durand@example.com', 'Nice', 'JOUET', 'COSMETIQUE'),
+('Durand', 'Emma', 'emma_durand', 'mdpEmma901', 'emma.durand@example.com', 'Nice', 'JOUET'),
 ('Leroy', 'Lucas', 'lucas_leroy', 'mdpLucas234', 'lucas.leroy@example.com', 'Strasbourg', 'VETEMENT'),
 ('Moreau', 'Manon', 'manon_moreau', 'mdpManon567', 'manon.moreau@example.com', 'Nantes', 'COSMETIQUE'),
 ('Garcia', 'Hugo', 'hugo_garcia', 'mdpHugo890', 'hugo.garcia@example.com', 'Rennes', 'JOUET');
@@ -53,26 +53,45 @@ INSERT INTO t_fournisseur (nom, prenom, login, password, email, localite, catego
 ('Chevalier', 'Nicolas', 'nicolas_chevalier', 'mdpNicolas890', 'nicolas.chevalier@example.com', 'Rennes', 'JOUET');
 
 
-INSERT INTO t_produit (reference, nom, prix, description, taille, qt_stock, categorie) VALUES
-('REF123', 'Fond de teint', 15.99, 'Fond de teint liquide pour une couvrance légère', 'Petite', 50, 'COSMETIQUE'),
-('REF456', 'Mascara', 9.75, 'Mascara allongeant pour des cils volumineux', 'Normale', 80, 'COSMETIQUE'),
-('REF789', 'Crayon à lèvres', 7.50, 'Crayon pour définir et souligner les lèvres', 'Normale', 60, 'COSMETIQUE'),
-('REF101', 'Palette ombres à paupières', 25.00, 'Palette ombres à paupières avec 12 couleurs vives', 'Grande', 30, 'COSMETIQUE'),
-('REF202', 'Poupée en peluche', 19.99, 'Poupée en peluche douce et câline', 'Grande', 45, 'JOUET'),
-('REF303', 'Voiture télécommandée', 29.99, 'Voiture télécommandée rapide et maniable', 'Normale', 20, 'JOUET'),
-('REF404', 'Lego Construction', 39.99, 'Ensemble de Lego pour construire divers objets', 'Grande', 15, 'JOUET'),
-('REF505', 'Jeu de société', 24.50, 'Jeu de société familial pour des heures de divertissement', 'Grande', 35, 'JOUET'),
-('REF606', 'Peluche Licorne', 12.99, 'Peluche douce et colorée représentant une licorne', 'Normale', 25, 'JOUET'),
-('REF001', 'Chemise homme', 29.99, 'Chemise élégante pour homme', 'M', 50, 'VETEMENT'),
-('REF002', 'Robe été', 39.99, 'Robe légère pour été', 'S', 30, 'VETEMENT'),
-('REF003', 'Jeans slim', 49.99, 'Jeans slim fit pour femme', 'L', 40, 'VETEMENT'),
-('REF004', 'Pull en laine', 34.99, 'Pull chaud pour lhiver', 'XL', 20, 'VETEMENT'),
-('REF005', 'Veste en cuir', 99.99, 'Veste élégante en cuir pour homme', 'M', 15, 'VETEMENT'),
-('REF707', 'Kit de maquillage enfant', 8.99, 'Kit de maquillage ludique pour enfants', 'Petite', 55, 'JOUET');
+INSERT INTO t_produit (numfourn, reference, nom, prix, description, taille, qt_stock, categorie) VALUES
+(1, 'REF123', 'Fond de teint', 15.99, 'Fond de teint liquide pour une couvrance légère', 'Petite', 50, 'COSMETIQUE'),
+(3, 'REF456', 'Mascara', 9.75, 'Mascara allongeant pour des cils volumineux', 'Normale', 80, 'COSMETIQUE'),
+(1, 'REF789', 'Crayon à lèvres', 7.50, 'Crayon pour définir et souligner les lèvres', 'Normale', 60, 'COSMETIQUE'),
+(6, 'REF101', 'Palette ombres à paupières', 25.00, 'Palette ombres à paupières avec 12 couleurs vives', 'Grande', 30, 'COSMETIQUE'),
+(5, 'REF202', 'Poupée en peluche', 19.99, 'Poupée en peluche douce et câline', 'Grande', 45, 'JOUET'),
+(2, 'REF303', 'Voiture télécommandée', 29.99, 'Voiture télécommandée rapide et maniable', 'Normale', 20, 'JOUET'),
+(9, 'REF404', 'Lego Construction', 39.99, 'Ensemble de Lego pour construire divers objets', 'Grande', 15, 'JOUET'),
+(10, 'REF505', 'Jeu de société', 24.50, 'Jeu de société familial pour des heures de divertissement', 'Grande', 35, 'JOUET'),
+(2, 'REF606', 'Peluche Licorne', 12.99, 'Peluche douce et colorée représentant une licorne', 'Normale', 25, 'JOUET'),
+(4, 'REF001', 'Chemise homme', 29.99, 'Chemise élégante pour homme', 'M', 50, 'VETEMENT'),
+(7, 'REF002', 'Robe été', 39.99, 'Robe légère pour été', 'S', 30, 'VETEMENT'),
+(4, 'REF003', 'Jeans slim', 49.99, 'Jeans slim fit pour femme', 'L', 40, 'VETEMENT'),
+(7, 'REF004', 'Pull en laine', 34.99, 'Pull chaud pour lhiver', 'XL', 20, 'VETEMENT'),
+(4, 'REF005', 'Veste en cuir', 99.99, 'Veste élégante en cuir pour homme', 'M', 15, 'VETEMENT'),
+(9, 'REF707', 'Kit de maquillage enfant', 8.99, 'Kit de maquillage ludique pour enfants', 'Petite', 55, 'JOUET');
 
 
-INSERT INTO t_offre (date_debut, date_fin, remise, categorie, numf) VALUES
-('2023-12-01', '2023-12-15', 12.0, 'JOUET', numfournisseur2),
-('2024-02-01', '2024-02-28', 18.0, 'COSMETIQUE', numfournisseur2),
-('2024-03-15', '2024-04-15', 25.0, 'VETEMENT', numfournisseur2);
+INSERT INTO t_offre (date_debut, date_fin, remise, categorie, numfourn) VALUES
+('2023-12-01', '2023-12-15', 12.0, 'JOUET', 1),
+( '2024-02-01', '2024-02-28', 18.0, 'COSMETIQUE', 2),
+('2024-03-15', '2024-04-15', 25.0, 'VETEMENT', 3);
+
+
+INSERT INTO t_commande (numclient, date_reglement, date_envoi, prix_total, statut) VALUES
+(5, '2023-10-15', '2023-10-18', 150.75, 'DELIVERED'),
+(2, '2023-09-25', NULL, 100.00, 'PENDING_CONFIRMATION'),
+(4, '2023-11-05', NULL, 75.20, 'CANCEL'),
+(1, '2023-08-20', '2023-08-25', 200.30, 'DELIVERED'),
+(3, '2023-11-10', NULL, 80.50, 'PENDING_CONFIRMATION'),
+(7, '2023-07-30', '2023-08-01', 300.00, 'DELIVERED'),
+(6, '2023-10-01', NULL, 50.00, 'CANCEL');
+
+INSERT INTO prod_in_com (idp, idc) VALUES
+(1, 5),
+(3, 5),
+(10, 2),
+(12, 2);
+
+
+
 

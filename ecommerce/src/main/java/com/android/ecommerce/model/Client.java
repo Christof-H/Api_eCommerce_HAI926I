@@ -21,7 +21,7 @@ public class Client {
 	//Attributs
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer numc;
+	private Integer numclient;
 	private String nom;
 	private String prenom;
 	private String login;
@@ -40,9 +40,9 @@ public class Client {
     //Constructeurs
     public Client() {}
 
-	public Client(Integer numc, String nom, String prenom, String login, String password, String email, String localite, Categorie categorie) {
+	public Client(Integer numclient, String nom, String prenom, String login, String password, String email, String localite, Categorie categorie) {
 		super();
-		this.numc = numc;
+		this.numclient = numclient;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.login = login;

@@ -1,6 +1,6 @@
 package com.android.ecommerce.model;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -34,17 +36,16 @@ public class Produit {
 	
 	//Relation Produit * <--> 1 Fournisseur
     @ManyToOne(targetEntity = Fournisseur.class)
-    @JoinColumn(name="numf")    
+    @JoinColumn(name="numfourn")    
     private Fournisseur fournisseur;
     
     
     //Relation Produit * <--> * Commande
-//  @ManyToMany
-//  @JoinTable( name = "t_associea",
-//  joinColumns = @JoinColumn( name = "numc" ),
-//  inverseJoinColumns = @JoinColumn( name = "codem" ) )
-//	private List<Monument> listMonument = new ArrayList<>();
-  //private ArrayList<Produit> list_produit = new ArrayList<>();
+  @ManyToMany
+  @JoinTable( name = "prod_in_com",
+  joinColumns = @JoinColumn( name = "idp" ),
+  inverseJoinColumns = @JoinColumn( name = "idc" ) )
+  private ArrayList<Commande> list_commande = new ArrayList<>();
     
     //Constructeurs:
     public Produit(){}

@@ -20,7 +20,7 @@ public class Fournisseur {
 		//Attributs
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Integer numf;
+		private Integer numfourn;
 		private String nom;
 		private String prenom;
 		private String login;
@@ -44,9 +44,9 @@ public class Fournisseur {
 	    //Constructeurs
 	    public Fournisseur() {}
 
-		public Fournisseur(Integer numf, String nom, String prenom, String login, String password, String email, String localite, Categorie categorie) {
+		public Fournisseur(Integer numfourn, String nom, String prenom, String login, String password, String email, String localite, Categorie categorie) {
 			super();
-			this.numf = numf;
+			this.numfourn = numfourn;
 			this.nom = nom;
 			this.prenom = prenom;
 			this.login = login;
