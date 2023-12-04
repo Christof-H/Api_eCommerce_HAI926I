@@ -1,11 +1,9 @@
 package com.android.ecommerce.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,12 +20,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="t_produit")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "idp")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "idp")
 public class Produit {
     //Attributs :
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idp;
+    private int idp;
     private String reference;
     private String nom;
     private Float prix;
@@ -42,7 +40,7 @@ public class Produit {
 	//Relation Produit * <--> 1 Fournisseur
     @ManyToOne(targetEntity = Fournisseur.class)
     @JoinColumn(name="numfourn")
-    @JsonBackReference 
+    @JsonBackReference
     private Fournisseur fournisseur;
     
     
@@ -51,8 +49,8 @@ public class Produit {
   @JoinTable( name = "prod_in_com",
   joinColumns = @JoinColumn( name = "idp" ),
   inverseJoinColumns = @JoinColumn( name = "idc" ) )
-  @JsonBackReference 
-  private ArrayList<Commande> list_commande = new ArrayList<>();
+  @JsonBackReference
+  private List<Commande> list_commande = new ArrayList<>();
     
     //Constructeurs:
     public Produit(){}
@@ -140,11 +138,12 @@ public class Produit {
 		this.fournisseur = fournisseur;
 	}
 
-	public ArrayList<Commande> getList_commande() {
+	public List<Commande> getList_commande() {
 		return list_commande;
 	}
 
 	public void setList_commande(ArrayList<Commande> list_commande) {
 		this.list_commande = list_commande;
 	}
+	
 }

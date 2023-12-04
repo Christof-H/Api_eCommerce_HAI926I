@@ -21,7 +21,7 @@ public class Fournisseur {
 		//Attributs
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Integer numfourn;
+		private int numfourn;
 		private String nom;
 		private String prenom;
 		private String login;
@@ -35,7 +35,7 @@ public class Fournisseur {
 		
 	  //Relation Fournisseur 1 <--> * Produit
 	    @OneToMany(targetEntity = Produit.class, mappedBy = "fournisseur")
-	    @JsonManagedReference//@JsonIgnore
+	    @JsonManagedReference
 	    private List<Produit> listProduits= new ArrayList<>();
 	    
 	  //Relation Fournisseur 1 <--> * Offre

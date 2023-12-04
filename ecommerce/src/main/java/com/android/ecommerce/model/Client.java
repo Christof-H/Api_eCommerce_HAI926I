@@ -20,7 +20,7 @@ public class Client {
 	//Attributs
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer numclient;
+	private int numclient;
 	private String nom;
 	private String prenom;
 	private String login;
@@ -34,10 +34,9 @@ public class Client {
 	
     //Relation Client 1 <--> * Commande
     @OneToMany(targetEntity = Commande.class, mappedBy = "client")
-    //@JsonIgnore
-    @JsonManagedReference 
+    @JsonManagedReference
     private List<Commande> listCommandes= new ArrayList<>();
-
+    
     //Constructeurs
     public Client() {}
 

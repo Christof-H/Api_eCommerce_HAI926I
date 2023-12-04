@@ -22,7 +22,7 @@ public class Offre {
     //Attributs
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ido;
+    private int ido;
     private Date date_debut;
     private Date date_fin;
     private Float remise;

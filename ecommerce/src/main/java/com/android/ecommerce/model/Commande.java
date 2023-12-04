@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -24,11 +23,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="t_commande")
+/*@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "idc")*/
 public class Commande {
     //Attributs :
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idc;
+    private int idc;
     private Date date_reglement;
     private Date date_envoi;
     private Float prix_total;
@@ -47,28 +49,20 @@ public class Commande {
     @ManyToMany
     @JoinTable( name = "prod_in_com",
     joinColumns = @JoinColumn( name = "idc" ),
-    inverseJoinColumns = @JoinColumn( name = "idp" ) )
+    inverseJoinColumns = @JoinColumn( name = "idp" ))
     @JsonManagedReference
     private List<Produit> list_produit = new ArrayList<>();
 
     //Constructeurs
     public Commande(){}
-    public Commande(Integer id, Date date_reglement, Date date_envoi, Float prix_total, Statut statut, Client client, List<Produit> list_produit) {
+    public Commande(Integer id, Date date_reglement, Date date_envoi, Float prix_total, Statut statut, Client client) {
         this.idc = id;
         this.date_reglement = date_reglement;
         this.date_envoi = date_envoi;
         this.prix_total = prix_total;
         this.statut = statut;
         this.client = client;
-        this.list_produit = list_produit;
-    }
-   
-    public List<Produit> getList_produit(){
-    	return list_produit;
-    }
-      
-    public void setList_produit(List<Produit> list_produit) {
-    	this.list_produit = list_produit;
+        //this.list_produit = list_produit;
     }
 	public Integer getIdc() {
 		return idc;
@@ -106,4 +100,14 @@ public class Commande {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+	
+	
+	public List<Produit> getList_produit() {
+		return list_produit;
+	}
+	public void setList_produit(ArrayList<Produit> list_produit) {
+		this.list_produit = list_produit;
+	}
+    
+    
 }
