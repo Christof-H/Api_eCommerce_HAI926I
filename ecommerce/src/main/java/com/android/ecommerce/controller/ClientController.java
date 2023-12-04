@@ -38,8 +38,8 @@ public class ClientController {
     
     @PostMapping("/addClient")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void addClient(@RequestBody Client client) {
-		clientService.saveClient(client);
+	public Client addClient(@RequestBody Client client) {
+		return clientService.saveClient(client);
 	}
     
 	@DeleteMapping("/client/{numclient}")

@@ -1,8 +1,8 @@
 package com.android.ecommerce.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,12 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
 
 
-@Data
+
 @Entity
 @Table(name="t_offre")
 public class Offre {
@@ -35,7 +33,8 @@ public class Offre {
 	
 //Relation Offre * <--> 1 Fournisseur
     @ManyToOne(targetEntity = Fournisseur.class)
-    @JoinColumn(name="numfourn")    
+    @JoinColumn(name="numfourn") 
+    @JsonBackReference
     private Fournisseur fournisseur;
 	
 
@@ -49,4 +48,53 @@ public class Offre {
         this.remise = remise;
         this.categorie = categorie;
     }
+
+	public Integer getIdo() {
+		return ido;
+	}
+
+	public void setIdo(Integer ido) {
+		this.ido = ido;
+	}
+
+	public Date getDate_debut() {
+		return date_debut;
+	}
+
+	public void setDate_debut(Date date_debut) {
+		this.date_debut = date_debut;
+	}
+
+	public Date getDate_fin() {
+		return date_fin;
+	}
+
+	public void setDate_fin(Date date_fin) {
+		this.date_fin = date_fin;
+	}
+
+	public Float getRemise() {
+		return remise;
+	}
+
+	public void setRemise(Float remise) {
+		this.remise = remise;
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public Fournisseur getFournisseur() {
+		return fournisseur;
+	}
+
+	public void setFournisseur(Fournisseur fournisseur) {
+		this.fournisseur = fournisseur;
+	}
+    
 }

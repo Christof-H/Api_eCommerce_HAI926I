@@ -1,6 +1,5 @@
 package com.android.ecommerce.service;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,7 @@ import org.springframework.stereotype.Service;
 import com.android.ecommerce.model.Client;
 import com.android.ecommerce.repository.ClientRepository;
 
-import lombok.Data;
 
-@Data
 @Service
 public class ClientService {
 	@Autowired

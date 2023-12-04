@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,10 +19,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
 
 
-@Data
+
 @Entity
 @Table(name="t_commande")
 public class Commande {
@@ -37,7 +39,8 @@ public class Commande {
     
   //Relation Commande * <--> 1 Client
     @ManyToOne(targetEntity = Client.class)
-    @JoinColumn(name="numclient")    
+    @JoinColumn(name="numclient") 
+    @JsonBackReference
     private Client client;
     
   //Relation Commande * <--> * Produit
@@ -45,17 +48,62 @@ public class Commande {
     @JoinTable( name = "prod_in_com",
     joinColumns = @JoinColumn( name = "idc" ),
     inverseJoinColumns = @JoinColumn( name = "idp" ) )
-    private ArrayList<Produit> list_produit = new ArrayList<>();
+    @JsonManagedReference
+    private List<Produit> list_produit = new ArrayList<>();
 
     //Constructeurs
     public Commande(){}
-    public Commande(Integer id, Date date_reglement, Date date_envoi, Float prix_total, Statut statut, Client client) {
+    public Commande(Integer id, Date date_reglement, Date date_envoi, Float prix_total, Statut statut, Client client, List<Produit> list_produit) {
         this.idc = id;
         this.date_reglement = date_reglement;
         this.date_envoi = date_envoi;
         this.prix_total = prix_total;
         this.statut = statut;
         this.client = client;
-        //this.list_produit = list_produit;
+        this.list_produit = list_produit;
     }
+   
+    public List<Produit> getList_produit(){
+    	return list_produit;
+    }
+      
+    public void setList_produit(List<Produit> list_produit) {
+    	this.list_produit = list_produit;
+    }
+	public Integer getIdc() {
+		return idc;
+	}
+	public void setIdc(Integer idc) {
+		this.idc = idc;
+	}
+	public Date getDate_reglement() {
+		return date_reglement;
+	}
+	public void setDate_reglement(Date date_reglement) {
+		this.date_reglement = date_reglement;
+	}
+	public Date getDate_envoi() {
+		return date_envoi;
+	}
+	public void setDate_envoi(Date date_envoi) {
+		this.date_envoi = date_envoi;
+	}
+	public Float getPrix_total() {
+		return prix_total;
+	}
+	public void setPrix_total(Float prix_total) {
+		this.prix_total = prix_total;
+	}
+	public Statut getStatut() {
+		return statut;
+	}
+	public void setStatut(Statut statut) {
+		this.statut = statut;
+	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 }
