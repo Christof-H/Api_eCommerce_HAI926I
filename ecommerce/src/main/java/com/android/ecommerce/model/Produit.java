@@ -20,7 +20,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="t_produit")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property = "idp")
 public class Produit {
     //Attributs :
 	@Id
