@@ -25,8 +25,10 @@ public class Supplier extends User {
 	@JsonManagedReference
 	private List<Offer> listOffer= new ArrayList<>();
 	
+	/*
 	@OneToMany(targetEntity = Order.class)
 	private List<Order> listOrder = new ArrayList<>();
+	*/
 	
 	//Constructeurs
 	public Supplier() {
