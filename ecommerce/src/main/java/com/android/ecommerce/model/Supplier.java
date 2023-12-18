@@ -3,6 +3,7 @@ package com.android.ecommerce.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.ecommerce.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.DiscriminatorValue;
@@ -15,14 +16,14 @@ import jakarta.persistence.OneToMany;
 public class Supplier extends User {
 
 	//Relation Supplier 1 <--> * Produit
-	@OneToMany(targetEntity = Produit.class, mappedBy = "fournisseur")
+	@OneToMany(targetEntity = Product.class, mappedBy = "supplier")
 	@JsonManagedReference
-	private List<Produit> listProduits= new ArrayList<>();
+	private List<Product> listProducts= new ArrayList<>();
 
 	//Relation Supplier 1 <--> * Offre
-	@OneToMany(targetEntity = Offre.class, mappedBy = "fournisseur")
+	@OneToMany(targetEntity = Offer.class, mappedBy = "supplier")
 	@JsonManagedReference
-	private List<Offre> listOffres= new ArrayList<>();
+	private List<Offer> listOffer= new ArrayList<>();
 
 
 	//Constructeurs
@@ -30,18 +31,18 @@ public class Supplier extends User {
 		super();
 	}
 
-	public void setListProduits (List<Produit> listProduits) {
-		this.listProduits = listProduits;
+	public void setListProduits (List<Product> listProducts) {
+		this.listProducts = listProducts;
 	}
-	public List<Produit> getListProduits(){
-		return this.listProduits;
+	public List<Product> getListProduits(){
+		return this.listProducts;
 	}
 
-	public void setListOffres (List<Offre> listOffres) {
-		this.listOffres = listOffres;
+	public void setListOffres (List<Offer> listOffres) {
+		this.listOffer = listOffres;
 	}
-	public List<Offre> getListOffres(){
-		return this.listOffres ;
+	public List<Offer> getListOffres(){
+		return this.listOffer ;
 	}
 
 	@Override

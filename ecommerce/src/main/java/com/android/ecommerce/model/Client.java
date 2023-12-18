@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.android.ecommerce.model.enumeration.Categorie;
+import com.android.ecommerce.model.enumeration.Category;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CollectionTable;
@@ -33,36 +33,36 @@ public class Client extends User implements Serializable{
 	private static final long serialVersionUID = 7464573509860235832L;
 
 	//Mapping JPA pour une Enumération :
-	@ElementCollection(targetClass = Categorie.class)
+	@ElementCollection(targetClass = Category.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "client_interests", joinColumns = @JoinColumn(name = "client_id"))
     @Column(name = "interest")
-    private Set<Categorie> centre_interet;
+    private Set<Category> centre_interet;
 	
     //Relation Client 1 <--> * Commande
-    @OneToMany(targetEntity = Commande.class, mappedBy = "client")
+    @OneToMany(targetEntity = Order.class, mappedBy = "client")
     @JsonManagedReference
-    private List<Commande> listCommandes= new ArrayList<>();
+    private List<Order> listOrder= new ArrayList<>();
     
     public Client() {
     	super();
     }
     
     //Getter
-	public Set<Categorie> getCentre_interet() {
+	public Set<Category> getCentre_interet() {
 		return centre_interet;
 	}
 
-	public List<Commande> getListCommandes() {
-		return listCommandes;
+	public List<Order> getListCommandes() {
+		return listOrder;
 	}
 
 	//Setter
-	public void setListCommandes(List<Commande> listCommandes) {
-		this.listCommandes = listCommandes;
+	public void setListCommandes(List<Order> listCommandes) {
+		this.listOrder = listCommandes;
 	}
 	
-	public void setCentre_interet(Set<Categorie> centre_interet) {
+	public void setCentre_interet(Set<Category> centre_interet) {
 		this.centre_interet = centre_interet;
 	}
 
