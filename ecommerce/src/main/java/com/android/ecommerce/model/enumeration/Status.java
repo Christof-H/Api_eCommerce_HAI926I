@@ -4,7 +4,8 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public enum Status {
-	LIVRÉ,
+	LIVRÉE,
+	EN_COURS_DE_LIVRAISON,
 	EN_ATTENTE_DE_CONFIRMATION,
 	SUPPRIMÉE
 }

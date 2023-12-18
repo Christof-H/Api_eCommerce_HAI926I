@@ -45,8 +45,6 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	//Constructeurs
 	public Offer(){}
 
-	
-
 	@Override
 	public Integer getId() {
 		return this.idOffer;

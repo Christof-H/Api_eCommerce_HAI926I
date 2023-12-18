@@ -37,7 +37,7 @@ public class Client extends User implements Serializable{
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "client_interests", joinColumns = @JoinColumn(name = "client_id"))
     @Column(name = "interest")
-    private Set<Category> centre_interet;
+    private Set<Category> interestsCenter;
 	
     //Relation Client 1 <--> * Commande
     @OneToMany(targetEntity = Order.class, mappedBy = "client")
@@ -50,7 +50,7 @@ public class Client extends User implements Serializable{
     
     //Getter
 	public Set<Category> getCentre_interet() {
-		return centre_interet;
+		return interestsCenter;
 	}
 
 	public List<Order> getListCommandes() {
@@ -63,13 +63,13 @@ public class Client extends User implements Serializable{
 	}
 	
 	public void setCentre_interet(Set<Category> centre_interet) {
-		this.centre_interet = centre_interet;
+		this.interestsCenter = centre_interet;
 	}
 
 	@Override
 	public void update(User source) {
 		super.update(source);
-		this.centre_interet = getCentre_interet();
+		this.interestsCenter = getCentre_interet();
 	}
 
 	@Override

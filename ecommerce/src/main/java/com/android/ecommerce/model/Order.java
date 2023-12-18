@@ -37,7 +37,8 @@ public class Order implements IGenericEntity<Order>, Serializable {
     private int idOrder;
     private LocalDate payementDate;
     private LocalDate deliveryDate;
-    private Float price;
+    private Float productPrice;
+    private Float shippingCost; 
     
 	//Mapping JPA pour une Enumération :
 	@Enumerated(EnumType.STRING)
@@ -77,10 +78,13 @@ public class Order implements IGenericEntity<Order>, Serializable {
 	}
 
 
-	public Float getPrice() {
-		return price;
+	public Float getProductPrice() {
+		return productPrice;
 	}
 
+	public Float getShippingCost() {
+		return shippingCost;
+	}
 
 	public Status getStatus() {
 		return status;
@@ -111,8 +115,12 @@ public class Order implements IGenericEntity<Order>, Serializable {
 	}
 
 
-	public void setPrice(Float price) {
-		this.price = price;
+	public void setProductPrice(Float productPrice) {
+		this.productPrice = productPrice;
+	}
+	
+	public void setShippingCost(Float shippingCost) {
+		this.shippingCost = shippingCost;
 	}
 
 
@@ -136,7 +144,8 @@ public class Order implements IGenericEntity<Order>, Serializable {
 		this.idOrder = source.getId();
 		this.deliveryDate = source.getDeliveryDate();
 		this.payementDate = source.getPayementDate();
-		this.price = source.getPrice();
+		this.productPrice = source.getProductPrice();
+		this.shippingCost = source.getShippingCost();
 		this.status = source.getStatus();
 		this.client = source.getClient();
 		this.orderedProducts = source.getOrderedProducts();

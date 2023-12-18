@@ -1,11 +1,9 @@
 package com.android.ecommerce.model.product;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.android.ecommerce.generic.IGenericEntity;
-import com.android.ecommerce.model.Order;
+import com.android.ecommerce.model.Offer;
 import com.android.ecommerce.model.Supplier;
 import com.android.ecommerce.model.enumeration.Category;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,9 +18,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -45,7 +42,7 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_product")
-    private Integer idProduct;
+    private int idProduct;
     private String reference;
     private String name;
     private Float price;
@@ -61,11 +58,16 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     @JsonBackReference
     private Supplier supplier;
 
+    /*
     // Relation Product * <--> * Commande
     @ManyToMany
     @JoinTable(name = "prod_in_com", joinColumns = @JoinColumn(name = "idProduct"), inverseJoinColumns = @JoinColumn(name = "idOrder"))
     @JsonBackReference
     private List<Order> list_commande = new ArrayList<>();
+    */
+
+    @OneToOne(mappedBy = "product")
+    private Offer offer;
 
     // Constructors
     public Product() {}
@@ -99,8 +101,14 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 		return supplier;
 	}
 
+	/*
 	public List<Order> getList_commande() {
 		return list_commande;
+	}
+	*/
+	
+	public Offer getOffer() {
+		return offer;
 	}
 
 	public void setId(Integer id) {
@@ -131,10 +139,16 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 		this.supplier = fournisseur;
 	}
 
+	/*
 	public void setList_commande(List<Order> list_commande) {
 		this.list_commande = list_commande;
 	}
-
+	*/
+	
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
+	
 	@Override
     public void update(Product source) {
 	    this.idProduct = source.getId();
@@ -142,6 +156,7 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 	    this.name = source.getName();
 	    this.price = source.getPrice();
 	    this.description = source.getDescription();
+	    this.offer = source.getOffer();
     }
 
 

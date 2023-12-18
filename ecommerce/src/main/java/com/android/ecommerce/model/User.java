@@ -25,13 +25,11 @@ public abstract class User implements IGenericEntity<User>{
 	//Attributs
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idUser;
+	private int idUser;
 	
 	private String lastName;
 	
 	private String firstName;
-	
-	private String login;
 	
 	private String password;
 	
@@ -54,10 +52,6 @@ public abstract class User implements IGenericEntity<User>{
 
 	public String getFirstName() {
 		return firstName;
-	}
-
-	public String getLogin() {
-		return login;
 	}
 
 	public String getPassword() {
@@ -85,10 +79,6 @@ public abstract class User implements IGenericEntity<User>{
 		this.firstName = firstName;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -106,7 +96,6 @@ public abstract class User implements IGenericEntity<User>{
 		idUser = source.getId();
 		lastName = source.getLastName();
 		firstName = source.getFirstName();
-		login = source.getLogin();
 		password = source.getPassword();
 		email = source.getEmail();
 		postcode = source.getPostcode();
