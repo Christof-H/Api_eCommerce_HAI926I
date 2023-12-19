@@ -57,7 +57,7 @@ public class Supplier extends User {
 	@Override
 	public User createNewInstance() {
 		Supplier supplier = new Supplier();
-		supplier.update(supplier);
+		supplier.update(this);
 		return supplier;
 	}
 

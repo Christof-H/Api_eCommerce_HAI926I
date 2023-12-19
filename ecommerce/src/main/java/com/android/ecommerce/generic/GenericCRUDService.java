@@ -46,9 +46,8 @@ public abstract class GenericCRUDService<T extends IGenericEntity<T>> {
 			return StreamSupport.stream(iterable.spliterator(), false)
 					.collect(Collectors.toList());
 		}else {
-			throw new NoSuchElementException("Aucun élément trouvé");
+			throw new NoSuchElementException(entityClass.getSimpleName());
 		}
-
 	}
 
 	/**
@@ -59,7 +58,7 @@ public abstract class GenericCRUDService<T extends IGenericEntity<T>> {
 	 */
 	public T get(Integer id){
 		return genericRepository.findById(id).orElseThrow(
-				() -> new EntityNotFoundException( entityClass.getSimpleName() + " avec l'identifiant " + id));
+				() -> new EntityNotFoundException(entityClass.getSimpleName() + " avec l'identifiant " + id));
 	}
 
 	/**

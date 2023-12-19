@@ -3,6 +3,8 @@ package com.android.ecommerce.model.product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name = "t_toy")
@@ -11,6 +13,8 @@ public class Toy extends Product{
 
 	private static final long serialVersionUID = -8563119925040352781L;
 	
+	@Min(value = 0)
+	@Max(value = 99)
 	private int recommendedAge;
 
 	
@@ -32,8 +36,8 @@ public class Toy extends Product{
      */
     @Override
     public void update(Product source) {
-        if (source instanceof Toy) {
-            Toy toySource = (Toy) source;
+        if (source instanceof Toy toySource) {
+            System.out.println(source.toString());
             super.update(toySource);
             this.recommendedAge = toySource.getRecommendedAge();
         }
@@ -42,8 +46,17 @@ public class Toy extends Product{
 	@Override
 	public Product createNewInstance() {
 		Toy toy = new Toy();
-		toy.update(toy);
+		toy.update(this);
 		return toy;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Toy [recommendedAge=" + recommendedAge + "]" + super.toString();
+	}
+	
+	
 
 }

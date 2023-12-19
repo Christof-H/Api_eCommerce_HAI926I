@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotNull;
+
 import com.android.ecommerce.model.enumeration.Category;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,6 +35,7 @@ public class Client extends User implements Serializable{
 	private static final long serialVersionUID = 7464573509860235832L;
 
 	//Mapping JPA pour une Enumération :
+	@NotNull
 	@ElementCollection(targetClass = Category.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "client_interests", joinColumns = @JoinColumn(name = "client_id"))

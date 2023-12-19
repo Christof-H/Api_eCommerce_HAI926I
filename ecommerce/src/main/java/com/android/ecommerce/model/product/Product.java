@@ -2,11 +2,19 @@ package com.android.ecommerce.model.product;
 
 import java.io.Serializable;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.Offer;
 import com.android.ecommerce.model.Supplier;
 import com.android.ecommerce.model.enumeration.Category;
+import com.android.ecommerce.validation.DecimalTwoDigits;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +41,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "t_product")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "category")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Toy.class, name = "TOY"),
+    @JsonSubTypes.Type(value = Clothing.class, name = "CLOTHING"),
+    @JsonSubTypes.Type(value = Fragrance.class, name = "FRAGRANCE")
+})
 public abstract class Product implements IGenericEntity<Product>, Serializable {
 
 
@@ -43,12 +57,26 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_product")
     protected int idProduct;
+    
+    @NotBlank(message = "{validation.product.reference.notblank}")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "{validation.product.reference.pattern}")
     protected String reference;
+    
+    @NotBlank(message = "{validation.product.name.notblank}")
+    @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "{validation.product.name.pattern}")
     protected String name;
+    
+    @NotNull(message = "{validation.product.price.notblank}")
+    //@Digits(integer = 13, fraction = 2, message = "{validation.product.price.digits}")
+    //@Pattern(regexp = "^[0-9]+(\\.[0-9]{2})?$", message = "{validation.product.price.digits}")
+    @DecimalTwoDigits
     protected Float price;
+    
+    @NotBlank(message = "{validation.product.description.notblank}")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]*$", message = "{validation.product.description.pattern}")
     protected String description;
 
-    // Mapping JPA for an Enumeration
+    @NotNull(message = "{validation.product.category.notnull}")
     @Enumerated(EnumType.STRING)
     protected Category category;
 
@@ -159,5 +187,13 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 	    this.offer = source.getOffer();
     }
 
+	@Override
+	public String toString() {
+		return "Product [idProduct=" + idProduct + ", reference=" + reference + ", name=" + name + ", price=" + price
+				+ ", description=" + description + ", category=" + category + ", supplier=" + supplier + ", offer="
+				+ offer + "]";
+	}
+
+	
 
 }

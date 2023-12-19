@@ -62,8 +62,7 @@ public class Clothing extends Product {
 
 	@Override
 	public void update(Product source) {
-		if (source instanceof Clothing) {
-			Clothing clothingSource = (Clothing) source;
+		if (source instanceof Clothing clothingSource) {
 			super.update(clothingSource);
 			this.stockS = clothingSource.getStockS();
 			this.stockM = clothingSource.getStockM();
@@ -75,7 +74,7 @@ public class Clothing extends Product {
 	@Override
 	public Product createNewInstance() {
 		Clothing clothing = new Clothing();
-		clothing.update(clothing);
+		clothing.update(this);
 		return clothing;
 	}
 

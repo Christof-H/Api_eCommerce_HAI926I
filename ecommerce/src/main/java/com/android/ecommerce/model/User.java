@@ -1,5 +1,9 @@
 package com.android.ecommerce.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 import com.android.ecommerce.generic.IGenericEntity;
 
 import jakarta.persistence.Entity;
@@ -27,14 +31,23 @@ public abstract class User implements IGenericEntity<User>{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int idUser;
 	
+	@NotBlank
+	@Pattern(regexp = "^[A-Z][a-zA-Z]*$",  message = "Lastname must start with a capital letter and contain only alphabetic characters.")
 	protected String lastName;
 	
+	@NotBlank
+	@Pattern(regexp = "^[A-Z][a-zA-Z]*$")
 	protected String firstName;
 	
+	@NotBlank
 	protected String password;
 	
+	@NotBlank
+	@Email
 	protected String email;
 	
+	@NotBlank
+	@Pattern(regexp = "\\d+") 
 	protected String postcode;
 
 	

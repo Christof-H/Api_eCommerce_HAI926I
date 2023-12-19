@@ -56,8 +56,7 @@ public class Fragrance extends Product {
 	 */
 	@Override
 	public void update(Product source) {
-		if (source instanceof Fragrance) {
-			Fragrance fragranceSource = (Fragrance) source;
+		if (source instanceof Fragrance fragranceSource) {
 			super.update(fragranceSource);
 			this.stock30Ml = fragranceSource.getStock30Ml();
 			this.stock50Ml = fragranceSource.getStock50Ml();
@@ -70,7 +69,7 @@ public class Fragrance extends Product {
 	@Override
 	public Product createNewInstance() {
 		Fragrance fragrance = new Fragrance();
-		fragrance.update(fragrance);
+		fragrance.update(this);
 		return fragrance;
 	}
 

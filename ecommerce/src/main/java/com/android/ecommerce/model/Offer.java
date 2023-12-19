@@ -3,6 +3,14 @@ package com.android.ecommerce.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
+
+import org.checkerframework.checker.optional.qual.Present;
+
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,8 +36,18 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOffer;
+	
+	@NotNull
+	@Present
 	private LocalDate startingDate;
+	
+	@NotNull
+	@Future
 	private LocalDate endingDate;
+	
+	@NotNull
+	@DecimalMin(value = "0.00")
+	@DecimalMax(value = "0.99")
 	private Float discountPercentage;
 
 	//Relation Offre * <--> 1 Fournisseur
@@ -121,7 +139,7 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	@Override
 	public Offer createNewInstance() {
 		Offer offer = new Offer();
-		offer.update(offer);
+		offer.update(this);
 		return offer;
 	}
 

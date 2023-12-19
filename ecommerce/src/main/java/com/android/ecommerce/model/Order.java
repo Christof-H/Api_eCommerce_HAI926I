@@ -5,9 +5,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.enumeration.Status;
 import com.android.ecommerce.model.product.Product;
+import com.android.ecommerce.validation.DecimalTwoDigits;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -35,12 +43,25 @@ public class Order implements IGenericEntity<Order>, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
+	
+	@NotNull
+	@PastOrPresent
     private LocalDate payementDate;
+	
+	@NotNull
+	@Future
     private LocalDate deliveryDate;
+	
+	@NotNull
+	@DecimalTwoDigits
     private Float productPrice;
+	
+	@NotNull
+	@DecimalTwoDigits
     private Float shippingCost; 
     
 	//Mapping JPA pour une Enumération :
+	@NotNull
 	@Enumerated(EnumType.STRING)
     private Status status;
     
@@ -154,7 +175,7 @@ public class Order implements IGenericEntity<Order>, Serializable {
 	@Override
 	public Order createNewInstance() {
 		Order order = new Order();
-		order.update(order);
+		order.update(this);
 		return order;
 	}
 

@@ -2,6 +2,8 @@ package com.android.ecommerce.generic;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +55,7 @@ public abstract class GenericCRUDController<T extends IGenericEntity<T>>{
 	 * @return ResponseEntity contenenant l'instance crée.
 	 */
 	@PostMapping("")
-	public ResponseEntity<T> create(@RequestBody T createNewRecord) {
+	public ResponseEntity<T> create(@RequestBody @Valid T createNewRecord) {
 		return ResponseEntity.ok(genericService.create(createNewRecord));
 	}
 
@@ -64,7 +66,7 @@ public abstract class GenericCRUDController<T extends IGenericEntity<T>>{
 	 * @return ResponseEntity contenant le tuple modifiée.
 	 */
 	@PutMapping("")
-	public ResponseEntity<T> update(@RequestBody T updatedRecord) {
+	public ResponseEntity<T> update(@RequestBody @Valid T updatedRecord) {
 		return ResponseEntity.ok(genericService.update(updatedRecord));
 	}
 
