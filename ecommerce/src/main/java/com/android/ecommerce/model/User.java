@@ -25,17 +25,17 @@ public abstract class User implements IGenericEntity<User>{
 	//Attributs
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idUser;
+	protected int idUser;
 	
-	private String lastName;
+	protected String lastName;
 	
-	private String firstName;
+	protected String firstName;
 	
-	private String password;
+	protected String password;
 	
-	private String email;
+	protected String email;
 	
-	private String postcode;
+	protected String postcode;
 
 	
 	//Constructeur

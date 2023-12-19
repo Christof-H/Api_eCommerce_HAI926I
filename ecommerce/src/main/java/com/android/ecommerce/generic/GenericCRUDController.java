@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public abstract class GenericCRUDController<T extends IGenericEntity<T>>{
 
 	private final GenericCRUDService<T> genericService; 
-
-	protected GenericCRUDController(GenericCRUDService<T> genericService) {
-		this.genericService = genericService;
+	 
+	protected GenericCRUDController(IGenericCRUDRepository<T> genericRepository, Class<T> entityClass) {
+		this.genericService = new GenericCRUDService<T>(genericRepository, entityClass) {
+		};
 	}
 
 	/**

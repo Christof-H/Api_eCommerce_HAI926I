@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 /**
@@ -24,9 +25,11 @@ import jakarta.transaction.Transactional;
 public abstract class GenericCRUDService<T extends IGenericEntity<T>> {
 
 	private final IGenericCRUDRepository<T> genericRepository;
+	private final Class<T> entityClass;
 
-	protected GenericCRUDService(IGenericCRUDRepository<T> genericRepository) {
+	protected GenericCRUDService(IGenericCRUDRepository<T> genericRepository, Class<T> entityClass) {
 		this.genericRepository = genericRepository;
+		this.entityClass = entityClass;
 	}
 
 
@@ -55,7 +58,8 @@ public abstract class GenericCRUDService<T extends IGenericEntity<T>> {
 	 * @return l'entité correspondante, ou null si elle n'existe pas
 	 */
 	public T get(Integer id){
-		return genericRepository.findById(id).orElse(null);
+		return genericRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundException( entityClass.getSimpleName() + " avec l'identifiant " + id));
 	}
 
 	/**

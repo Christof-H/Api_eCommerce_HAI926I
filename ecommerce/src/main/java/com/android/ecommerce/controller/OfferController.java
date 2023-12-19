@@ -3,7 +3,7 @@ package com.android.ecommerce.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class OffreController {
+public class OfferController {
 	/*
 	@Autowired
 	OffreService offreService;

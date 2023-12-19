@@ -42,21 +42,21 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_product")
-    private int idProduct;
-    private String reference;
-    private String name;
-    private Float price;
-    private String description;
+    protected int idProduct;
+    protected String reference;
+    protected String name;
+    protected Float price;
+    protected String description;
 
     // Mapping JPA for an Enumeration
     @Enumerated(EnumType.STRING)
-    private Category category;
+    protected Category category;
 
     // Relation Product * <--> 1 Supplier
     @ManyToOne(targetEntity = Supplier.class)
     @JoinColumn(name = "idSupplier")
     @JsonBackReference
-    private Supplier supplier;
+    protected Supplier supplier;
 
     /*
     // Relation Product * <--> * Commande
@@ -67,7 +67,7 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     */
 
     @OneToOne(mappedBy = "product")
-    private Offer offer;
+    protected Offer offer;
 
     // Constructors
     public Product() {}
