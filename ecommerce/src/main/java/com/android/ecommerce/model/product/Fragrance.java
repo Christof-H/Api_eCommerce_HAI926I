@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "t_fragrance")
@@ -13,12 +14,15 @@ public class Fragrance extends Product {
 	private static final long serialVersionUID = 920626609743459997L;
 
 	@Column(name = "stock_30_ml")
+	@Positive
 	private int stock30Ml;
 
 	@Column(name = "stock_50_ml")
+	@Positive
 	private int stock50Ml;
 
 	@Column(name = "stock_100_ml")
+	@Positive
 	private int stock100Ml;
 
 	public Fragrance() {

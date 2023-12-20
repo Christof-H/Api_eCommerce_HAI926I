@@ -2,11 +2,6 @@ package com.android.ecommerce.model.product;
 
 import java.io.Serializable;
 
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.Offer;
 import com.android.ecommerce.model.Supplier;
@@ -29,6 +24,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 
 
 /**
@@ -58,25 +57,24 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     @Column(name="id_product")
     protected int idProduct;
     
-    @NotBlank(message = "{validation.product.reference.notblank}")
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "{validation.product.reference.pattern}")
+    @NotBlank(message = "{validation.notblank}")
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "{validation.only.alphanumeric}")
     protected String reference;
     
-    @NotBlank(message = "{validation.product.name.notblank}")
-    @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "{validation.product.name.pattern}")
+    @NotBlank(message = "{validation.notblank}")
+    @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "{validation.first.capitalize.alphabetic}")
     protected String name;
     
-    @NotNull(message = "{validation.product.price.notblank}")
-    //@Digits(integer = 13, fraction = 2, message = "{validation.product.price.digits}")
-    //@Pattern(regexp = "^[0-9]+(\\.[0-9]{2})?$", message = "{validation.product.price.digits}")
+    @NotNull(message = "{validation.notnull}")
     @DecimalTwoDigits
+    @Positive
     protected Float price;
     
-    @NotBlank(message = "{validation.product.description.notblank}")
-    @Pattern(regexp = "^[a-zA-Z0-9\\s]*$", message = "{validation.product.description.pattern}")
+    @NotBlank(message = "{validation.notblank}")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]*$", message = "{validation.alphabetic.space}")
     protected String description;
 
-    @NotNull(message = "{validation.product.category.notnull}")
+    @NotNull(message = "{validation.notnull}")
     @Enumerated(EnumType.STRING)
     protected Category category;
 

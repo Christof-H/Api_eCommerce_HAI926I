@@ -31,22 +31,22 @@ public abstract class User implements IGenericEntity<User>{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int idUser;
 	
-	@NotBlank
+	@NotBlank(message = "{validation.notblank}")
 	@Pattern(regexp = "^[A-Z][a-zA-Z]*$",  message = "Lastname must start with a capital letter and contain only alphabetic characters.")
 	protected String lastName;
 	
-	@NotBlank
+	@NotBlank(message = "{validation.notblank}")
 	@Pattern(regexp = "^[A-Z][a-zA-Z]*$")
 	protected String firstName;
 	
-	@NotBlank
+	@NotBlank(message = "{validation.notblank}")
 	protected String password;
 	
-	@NotBlank
+	@NotBlank(message = "{validation.notblank}")
 	@Email
 	protected String email;
 	
-	@NotBlank
+	@NotBlank(message = "{validation.notblank}")
 	@Pattern(regexp = "\\d+") 
 	protected String postcode;
 

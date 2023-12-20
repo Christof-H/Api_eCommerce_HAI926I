@@ -12,7 +12,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DecimalTwoDigitsValidator.class)
 public @interface DecimalTwoDigits {
-    String message() default "Doit avoir deux chiffres après la virgule";
+    String message() default "Decimal must two number after the dot";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

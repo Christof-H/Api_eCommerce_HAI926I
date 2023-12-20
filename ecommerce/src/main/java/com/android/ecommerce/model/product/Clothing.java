@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "t_clothing")
@@ -13,15 +14,19 @@ public class Clothing extends Product {
 	private static final long serialVersionUID = -4320635418373817164L;
 
 	@Column(name = "stock_S")
+	@Positive
 	private int stockS;
 	
 	@Column(name = "stock_M")
+	@Positive
 	private int stockM;
 	
 	@Column(name = "stock_L")
+	@Positive
 	private int stockL;
 	
 	@Column(name = "stock_XL")
+	@Positive
 	private int stockXL;
 	
 	public Clothing() {

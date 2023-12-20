@@ -35,7 +35,7 @@ public class Client extends User implements Serializable{
 	private static final long serialVersionUID = 7464573509860235832L;
 
 	//Mapping JPA pour une Enumération :
-	@NotNull
+    @NotNull(message = "{validation.notnull}")
 	@ElementCollection(targetClass = Category.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "client_interests", joinColumns = @JoinColumn(name = "client_id"))

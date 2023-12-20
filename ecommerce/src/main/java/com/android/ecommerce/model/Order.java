@@ -5,13 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
-
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.enumeration.Status;
 import com.android.ecommerce.model.product.Product;
@@ -30,6 +23,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 
 
@@ -44,24 +41,24 @@ public class Order implements IGenericEntity<Order>, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
 	
-	@NotNull
+	@NotBlank(message = "{validation.notblank}")
 	@PastOrPresent
     private LocalDate payementDate;
 	
-	@NotNull
+	@NotBlank(message = "{validation.notblank}")
 	@Future
     private LocalDate deliveryDate;
 	
-	@NotNull
+	@NotNull(message = "{validation.notnull}")
 	@DecimalTwoDigits
     private Float productPrice;
 	
-	@NotNull
+	@NotNull(message = "{validation.notnull}")
 	@DecimalTwoDigits
     private Float shippingCost; 
     
 	//Mapping JPA pour une Enumération :
-	@NotNull
+	@NotBlank(message = "{validation.notblank}")
 	@Enumerated(EnumType.STRING)
     private Status status;
     
@@ -69,6 +66,7 @@ public class Order implements IGenericEntity<Order>, Serializable {
     @ManyToOne(targetEntity = Client.class)
     @JoinColumn(name="numClient") 
     @JsonBackReference
+	@NotBlank(message = "{validation.notblank}")
     private Client client;
     
   //Relation Commande * <--> * Produit

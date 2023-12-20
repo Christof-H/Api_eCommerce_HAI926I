@@ -3,12 +3,6 @@ package com.android.ecommerce.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
-
 import org.checkerframework.checker.optional.qual.Present;
 
 import com.android.ecommerce.generic.IGenericEntity;
@@ -23,6 +17,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 
@@ -37,15 +36,15 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOffer;
 	
-	@NotNull
+	@NotBlank(message = "{validation.notblank}")
 	@Present
 	private LocalDate startingDate;
 	
-	@NotNull
+	@NotBlank(message = "{validation.notblank}")
 	@Future
 	private LocalDate endingDate;
 	
-	@NotNull
+	@NotNull(message = "{validation.notnull}")
 	@DecimalMin(value = "0.00")
 	@DecimalMax(value = "0.99")
 	private Float discountPercentage;
@@ -54,10 +53,12 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	@ManyToOne(targetEntity = Supplier.class)
 	@JoinColumn(name="numSupplier") 
 	@JsonBackReference
+	@NotBlank(message = "{validation.notblank}")
 	private Supplier supplier;
 
 	@OneToOne
 	@JoinColumn(name = "idProduct")
+	@NotBlank(message = "{validation.notblank}")
 	private Product product;
 
 	//Constructeurs
