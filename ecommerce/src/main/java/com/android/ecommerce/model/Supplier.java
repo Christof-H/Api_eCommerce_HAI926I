@@ -1,8 +1,12 @@
 package com.android.ecommerce.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+
+import com.android.ecommerce.model.enumeration.Role;
 import com.android.ecommerce.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -12,7 +16,7 @@ import jakarta.persistence.OneToMany;
 
 
 @Entity
-@DiscriminatorValue("Supplier")
+@DiscriminatorValue("user_supplier")
 public class Supplier extends User {
 
 	//Relation Supplier 1 <--> * Produit
@@ -58,7 +62,9 @@ public class Supplier extends User {
 	public User createNewInstance() {
 		Supplier supplier = new Supplier();
 		supplier.update(this);
+		supplier.setUserType(Role.SUPPLIER);
 		return supplier;
 	}
+
 
 }

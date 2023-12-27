@@ -1,18 +1,34 @@
 package com.android.ecommerce.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.android.ecommerce.generic.IGenericEntity;
+import com.android.ecommerce.model.enumeration.Category;
+import com.android.ecommerce.model.enumeration.Role;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * 
@@ -24,8 +40,16 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="t_user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class User implements IGenericEntity<User>{
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Supplier.class, name = "SUPPLIER"),
+    @JsonSubTypes.Type(value = Client.class, name = "CLIENT")
+})
+public abstract class User implements IGenericEntity<User>, UserDetails{
 	
+	private static final long serialVersionUID = 6315138356298279759L;
+
 	//Attributs
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +73,9 @@ public abstract class User implements IGenericEntity<User>{
 	@NotBlank(message = "{validation.notblank}")
 	@Pattern(regexp = "\\d+") 
 	protected String postcode;
-
+	
+    @Enumerated(EnumType.STRING)
+    protected Role userType;
 	
 	//Constructeur
 	public User() {}
@@ -79,6 +105,10 @@ public abstract class User implements IGenericEntity<User>{
 		return postcode;
 	}
 	
+	public Role getUserType() {
+		return userType;
+	}
+	
 	//Setter
 	public void setId(Integer id) {
 		this.idUser = id;
@@ -103,6 +133,11 @@ public abstract class User implements IGenericEntity<User>{
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
+	
+
+	public void setUserType(Role userType) {
+		this.userType = userType;
+	}
 
 	@Override
 	public void update(User source) {
@@ -112,7 +147,37 @@ public abstract class User implements IGenericEntity<User>{
 		password = source.getPassword();
 		email = source.getEmail();
 		postcode = source.getPostcode();
-		
 	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(getUserType().toString()));
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {	
+		return false;
+	}
+
 
 }

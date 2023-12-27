@@ -8,6 +8,7 @@ import java.util.Set;
 import jakarta.validation.constraints.NotNull;
 
 import com.android.ecommerce.model.enumeration.Category;
+import com.android.ecommerce.model.enumeration.Role;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CollectionTable;
@@ -29,7 +30,7 @@ import jakarta.persistence.OneToMany;
  * 
  */
 @Entity
-@DiscriminatorValue("Client")
+@DiscriminatorValue("user_client")
 public class Client extends User implements Serializable{
 
 	private static final long serialVersionUID = 7464573509860235832L;
@@ -78,6 +79,7 @@ public class Client extends User implements Serializable{
 	@Override
 	public User createNewInstance() {
 		Client client = new Client();
+		client.setUserType(Role.CLIENT);
 		client.update(client);
 		return client;
 	}

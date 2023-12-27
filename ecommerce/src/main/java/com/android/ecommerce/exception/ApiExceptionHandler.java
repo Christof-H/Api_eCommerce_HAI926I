@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -48,7 +49,14 @@ public class ApiExceptionHandler {
 				new Object[]{exception.getMessage()}, LocaleContextHolder.getLocale());
 		return buildResponseEntity(message, HttpStatus.NOT_FOUND);
 	}
-
+	
+	@ExceptionHandler(value = {EntityExistsException.class})
+	public ResponseEntity<Object> handleEntityExistsException(EntityExistsException exception) {
+		String message = errormessage.getMessage("error.entityExists", 
+				new Object[]{exception.getMessage()}, LocaleContextHolder.getLocale());
+		return buildResponseEntity(message, HttpStatus.CONFLICT);
+	}
+	
 	/* TODO Le sysout permet de récupérer le nom du champ en erreur il faut simplement que je créer
 	 * ensuite une propriété de message de validation à trou afin de pouvoir la modifier à la volet
 	 */
