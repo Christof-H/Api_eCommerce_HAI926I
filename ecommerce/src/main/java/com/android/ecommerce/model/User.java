@@ -41,7 +41,7 @@ import jakarta.validation.constraints.Pattern;
 @Table(name="t_user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "role")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Supplier.class, name = "SUPPLIER"),
     @JsonSubTypes.Type(value = Client.class, name = "CLIENT")

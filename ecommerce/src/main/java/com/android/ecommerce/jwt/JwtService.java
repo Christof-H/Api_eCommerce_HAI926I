@@ -10,6 +10,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.android.ecommerce.model.Client;
+import com.android.ecommerce.model.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,7 +33,7 @@ public class JwtService {
 		return claimsResolver.apply(claims);
 	}
 
-		public String generateToken(UserDetails userDetails) {
+		public String generateToken(User userDetails) {
 		    Map<String, Object> claims = new HashMap<>();
 
 		    // Obtention du rôle à partir de UserDetails
@@ -38,9 +41,17 @@ public class JwtService {
 		                             .map(GrantedAuthority::getAuthority)
 		                             .findFirst()
 		                             .orElse(null);
-		    String email = userDetails.getUsername();
+		    
 		    claims.put("role", role);
-		    claims.put("email", email);
+		    claims.put("lastName", userDetails.getLastName());
+		    claims.put("firstName", userDetails.getFirstName());
+		    claims.put("email", userDetails.getUsername());
+		    claims.put("postcode", userDetails.getPostcode());
+		    
+		    if(userDetails instanceof Client) {
+		    	Client client = (Client) userDetails;
+		    	claims.put("interestsCenter", client.getCentre_interet());
+		    }
 
 		    return generateToken(claims, userDetails);
 			
