@@ -1,9 +1,27 @@
 package com.android.ecommerce.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.android.ecommerce.generic.GenericCRUDController;
+import com.android.ecommerce.generic.IGenericCRUDRepository;
+import com.android.ecommerce.model.Offer;
+
+
+
 @RestController
-public class OfferController {
+@RequestMapping("/offer")
+//@Api(value = "Offer Controller", description = "Controller for managing offers")
+public class OfferController extends GenericCRUDController<Offer> {
+
+
+    protected OfferController(IGenericCRUDRepository<Offer> genericRepository) {
+        super(genericRepository, Offer.class);
+    }
+
 	/*
 	@Autowired
 	OffreService offreService;

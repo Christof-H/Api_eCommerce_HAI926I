@@ -36,10 +36,20 @@ public class SecurityConfiguration {
 			http.csrf(csrf -> csrf.disable())
 			.cors(Customizer.withDefaults())
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/api/auth/**").permitAll()
+					.requestMatchers("/api/auth/**",
+					          "/api/auth/**",
+					            "/v3/api-docs",
+					            "/v3/api-docs/**",
+					            "/swagger-ui.html",
+					            "/swagger-ui/**", // Swagger UI v3 paths
+					            "/swagger-resources/**",
+					            "/configuration/ui",
+					            "/configuration/security",
+					            "/webjars/**").permitAll()
 					//.requestMatchers("/api/monument/admin/**").hasAnyAuthority(Role.ADMINISTRATEUR.toString())
 					//.requestMatchers("/api/celebrite/admin/**").hasAnyAuthority(Role.ADMINISTRATEUR.toString())
-					.anyRequest().authenticated()
+					//.anyRequest().authenticated()
+					.anyRequest().permitAll()
 					//.anyRequest().hasAnyAuthority(Role.ADMINISTRATEUR.toString(), Role.TOURISTE.toString())
 					)
 			.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

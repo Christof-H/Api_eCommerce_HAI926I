@@ -58,7 +58,7 @@ public class AuthentificationService extends GenericCRUDService<User>{
 			String email = requestMap.get("email");
 			String password = requestMap.get("password");
 			Optional<User> user = userRepository.findByEmail(email);
-			if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
+			if (user.isPresent() && password.matches(user.get().getPassword())) {
 				String token = jwtService.generateToken(user.get());
 				TokenResponse tokenResponse = new TokenResponse(token);
 				return ResponseEntity.ok(tokenResponse);

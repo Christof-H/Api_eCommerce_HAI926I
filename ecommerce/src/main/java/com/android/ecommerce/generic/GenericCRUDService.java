@@ -61,6 +61,10 @@ public abstract class GenericCRUDService<T extends IGenericEntity<T>> {
 				() -> new EntityNotFoundException(entityClass.getSimpleName() + " avec l'identifiant " + id));
 	}
 
+	
+	// Hook avant la création
+	protected void beforeCreate(T entity) {}	
+
 	/**
 	 * Crée une nouvelle entité dans la base de données.
 	 * 
@@ -69,6 +73,7 @@ public abstract class GenericCRUDService<T extends IGenericEntity<T>> {
 	 */
 	@Transactional
 	public T create(T createNewRecord){
+		beforeCreate(createNewRecord);
 		T dao = createNewRecord.createNewInstance();
 		return genericRepository.save(dao);
 	}

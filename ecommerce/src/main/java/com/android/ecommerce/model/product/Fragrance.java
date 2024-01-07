@@ -1,29 +1,30 @@
 package com.android.ecommerce.model.product;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "t_fragrance")
 @PrimaryKeyJoinColumn(name = "id_product")
-public class Fragrance extends Product {
-
-	private static final long serialVersionUID = 920626609743459997L;
-
+public class Fragrance extends Product implements Serializable {
+	
 	@Column(name = "stock_30_ml")
-	@Positive
-	private int stock30Ml;
+	@PositiveOrZero
+	private int stock30Ml = 0;
 
 	@Column(name = "stock_50_ml")
-	@Positive
-	private int stock50Ml;
+	@PositiveOrZero
+	private int stock50Ml = 0;
 
 	@Column(name = "stock_100_ml")
-	@Positive
-	private int stock100Ml;
+	@PositiveOrZero
+	private int stock100Ml = 0;
 
 	public Fragrance() {
 		super(); 
@@ -74,6 +75,7 @@ public class Fragrance extends Product {
 	public Product createNewInstance() {
 		Fragrance fragrance = new Fragrance();
 		fragrance.update(this);
+		fragrance.setCategory(category.FRAGRANCE);
 		return fragrance;
 	}
 

@@ -21,37 +21,66 @@ public class Supplier extends User {
 
 	//Relation Supplier 1 <--> * Produit
 	@OneToMany(targetEntity = Product.class, mappedBy = "supplier")
-	@JsonManagedReference
+	@JsonManagedReference("product-back-reference")
 	private List<Product> listProducts= new ArrayList<>();
 
 	//Relation Supplier 1 <--> * Offre
 	@OneToMany(targetEntity = Offer.class, mappedBy = "supplier")
-	@JsonManagedReference
+	@JsonManagedReference("supplier-back-reference")
 	private List<Offer> listOffer= new ArrayList<>();
 	
-	/*
-	@OneToMany(targetEntity = Order.class)
-	private List<Order> listOrder = new ArrayList<>();
-	*/
+	
+	@OneToMany(targetEntity = Order.class, mappedBy = "supplier")
+	@JsonManagedReference("order-back-reference")
+	private List<Order> listOrder= new ArrayList<>();
 	
 	//Constructeurs
 	public Supplier() {
 		super();
 	}
 
-	public void setListProduits (List<Product> listProducts) {
-		this.listProducts = listProducts;
-	}
-	public List<Product> getListProduits(){
-		return this.listProducts;
+
+	public List<Product> getListProducts() {
+		return listProducts;
 	}
 
-	public void setListOffres (List<Offer> listOffres) {
-		this.listOffer = listOffres;
+
+
+
+	public List<Offer> getListOffer() {
+		return listOffer;
 	}
-	public List<Offer> getListOffres(){
-		return this.listOffer ;
+
+
+
+
+	public List<Order> getListOrder() {
+		return listOrder;
 	}
+
+
+
+
+	public void setListProducts(List<Product> listProducts) {
+		this.listProducts = listProducts;
+	}
+
+
+
+
+	public void setListOffer(List<Offer> listOffer) {
+		this.listOffer = listOffer;
+	}
+
+
+
+
+	public void setListOrder(List<Order> listOrder) {
+		this.listOrder = listOrder;
+	}
+
+
+
 
 	@Override
 	public void update(User source) {

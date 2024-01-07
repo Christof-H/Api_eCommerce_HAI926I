@@ -22,6 +22,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -65,16 +66,35 @@ public class Order implements IGenericEntity<Order>, Serializable {
   //Relation Commande * <--> 1 Client
     @ManyToOne(targetEntity = Client.class)
     @JoinColumn(name="numClient") 
-    @JsonBackReference
+    @JsonBackReference("client-back-reference")
 	@NotBlank(message = "{validation.notblank}")
     private Client client;
     
-  //Relation Commande * <--> * Produit
+    
+	@ManyToOne(targetEntity = Supplier.class)
+	@JsonBackReference("order-back-reference")
+	private Supplier supplier;
+	
+    
+  public int getIdOrder() {
+		return idOrder;
+	}
+
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+	//Relation Commande * <--> * Produit
     @ManyToMany
     @JoinTable( name = "prod_in_com",
     joinColumns = @JoinColumn( name = "idOrder" ),
     inverseJoinColumns = @JoinColumn( name = "idProduct" ))
-    @JsonManagedReference
     private List<Product> orderedProducts = new ArrayList<>();
 
     //Constructeurs
@@ -156,6 +176,18 @@ public class Order implements IGenericEntity<Order>, Serializable {
 	public void setOrderedProducts(List<Product> orderedProducts) {
 		this.orderedProducts = orderedProducts;
 	}
+
+	
+/*
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+	*/
 
 
 	@Override

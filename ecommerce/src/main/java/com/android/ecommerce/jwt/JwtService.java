@@ -43,6 +43,7 @@ public class JwtService {
 		                             .orElse(null);
 		    
 		    claims.put("role", role);
+		    claims.put("id", userDetails.getId());
 		    claims.put("lastName", userDetails.getLastName());
 		    claims.put("firstName", userDetails.getFirstName());
 		    claims.put("email", userDetails.getUsername());
@@ -50,7 +51,7 @@ public class JwtService {
 		    
 		    if(userDetails instanceof Client) {
 		    	Client client = (Client) userDetails;
-		    	claims.put("interestsCenter", client.getCentre_interet());
+		    	//claims.put("interestsCenter", client.getCentre_interet());
 		    }
 
 		    return generateToken(claims, userDetails);

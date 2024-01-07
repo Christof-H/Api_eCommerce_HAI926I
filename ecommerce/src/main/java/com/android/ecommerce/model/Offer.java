@@ -8,6 +8,7 @@ import org.checkerframework.checker.optional.qual.Present;
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,13 +37,6 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOffer;
 	
-	@NotBlank(message = "{validation.notblank}")
-	@Present
-	private LocalDate startingDate;
-	
-	@NotBlank(message = "{validation.notblank}")
-	@Future
-	private LocalDate endingDate;
 	
 	@NotNull(message = "{validation.notnull}")
 	@DecimalMin(value = "0.00")
@@ -52,13 +46,12 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	//Relation Offre * <--> 1 Fournisseur
 	@ManyToOne(targetEntity = Supplier.class)
 	@JoinColumn(name="numSupplier") 
-	@JsonBackReference
-	@NotBlank(message = "{validation.notblank}")
+	@JsonBackReference("supplier-back-reference")
 	private Supplier supplier;
 
 	@OneToOne
-	@JoinColumn(name = "idProduct")
-	@NotBlank(message = "{validation.notblank}")
+    @JoinColumn(name = "idProduct")
+	@JsonBackReference("productOffer-back-reference")
 	private Product product;
 
 	//Constructeurs
@@ -70,17 +63,6 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	public Integer getId() {
 		return this.idOffer;
 	}
-	
-	public LocalDate getStartingDate() {
-		return startingDate;
-	}
-
-
-
-	public LocalDate getEndingDate() {
-		return endingDate;
-	}
-
 
 
 	public Float getDiscountPercentage() {
@@ -101,16 +83,6 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	public void setIdOffer(int idOffer) {
 		this.idOffer = idOffer; 
 	}
-	
-	public void setStartingDate(LocalDate startingDate) {
-		this.startingDate = startingDate;
-	}
-
-
-
-	public void setEndingDate(LocalDate endingDate) {
-		this.endingDate = endingDate;
-	}
 
 
 
@@ -130,8 +102,6 @@ public class Offer implements IGenericEntity<Offer>, Serializable{
 	@Override
 	public void update(Offer source) {
 		this.idOffer = source.getId();
-		this.startingDate = source.getStartingDate();
-		this.endingDate = source.getEndingDate();
 		this.discountPercentage = source.getDiscountPercentage();
 		this.supplier = source.getSupplier();
 		this.product = source.getProduct();

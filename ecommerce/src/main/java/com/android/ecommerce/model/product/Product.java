@@ -1,13 +1,17 @@
 package com.android.ecommerce.model.product;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.android.ecommerce.generic.IGenericEntity;
 import com.android.ecommerce.model.Offer;
+import com.android.ecommerce.model.Order;
 import com.android.ecommerce.model.Supplier;
 import com.android.ecommerce.model.enumeration.Category;
 import com.android.ecommerce.validation.DecimalTwoDigits;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -21,6 +25,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -62,7 +69,7 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     protected String reference;
     
     @NotBlank(message = "{validation.notblank}")
-    @Pattern(regexp = "^[A-Z][a-zA-Z]*$", message = "{validation.first.capitalize.alphabetic}")
+    @Pattern(regexp = "^[A-Z][a-zA-Z\\s]*$", message = "{validation.first.capitalize.alphabetic.space}")
     protected String name;
     
     @NotNull(message = "{validation.notnull}")
@@ -73,26 +80,31 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
     @NotBlank(message = "{validation.notblank}")
     @Pattern(regexp = "^[a-zA-Z0-9\\s]*$", message = "{validation.alphabetic.space}")
     protected String description;
+    
+    @Lob  // Large Object
+    @Column(name = "image", columnDefinition="BLOB")
+    private byte[] image;
 
-    @NotNull(message = "{validation.notnull}")
     @Enumerated(EnumType.STRING)
     protected Category category;
 
     // Relation Product * <--> 1 Supplier
     @ManyToOne(targetEntity = Supplier.class)
     @JoinColumn(name = "idSupplier")
-    @JsonBackReference
+    @JsonBackReference("product-back-reference")
     protected Supplier supplier;
 
-    /*
+    
     // Relation Product * <--> * Commande
+    
     @ManyToMany
     @JoinTable(name = "prod_in_com", joinColumns = @JoinColumn(name = "idProduct"), inverseJoinColumns = @JoinColumn(name = "idOrder"))
     @JsonBackReference
-    private List<Order> list_commande = new ArrayList<>();
-    */
-
+    private List<Order> list_commande;
+    
+    
     @OneToOne(mappedBy = "product")
+    @JsonManagedReference("productOffer-back-reference")
     protected Offer offer;
 
     // Constructors
@@ -123,18 +135,22 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 		return category;
 	}
 
-	public Supplier getFournisseur() {
+	public Supplier getSupplier() {
 		return supplier;
 	}
 
-	/*
+	
 	public List<Order> getList_commande() {
 		return list_commande;
 	}
-	*/
+	
 	
 	public Offer getOffer() {
 		return offer;
+	}
+
+	public byte[] getImage() {
+		return image;
 	}
 
 	public void setId(Integer id) {
@@ -161,19 +177,32 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 		this.category = category;
 	}
 
-	public void setFournisseur(Supplier fournisseur) {
-		this.supplier = fournisseur;
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
-
-	/*
+	
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
+	
 	public void setList_commande(List<Order> list_commande) {
 		this.list_commande = list_commande;
 	}
-	*/
-	
+
+	public int getIdProduct() {
+		return idProduct;
+	}
+
+	public void setIdProduct(int idProduct) {
+		this.idProduct = idProduct;
+	}
+
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
+	
+	
 	
 	@Override
     public void update(Product source) {
@@ -183,6 +212,9 @@ public abstract class Product implements IGenericEntity<Product>, Serializable {
 	    this.price = source.getPrice();
 	    this.description = source.getDescription();
 	    this.offer = source.getOffer();
+	    this.supplier = source.getSupplier();
+	    this.category = source.getCategory();
+	    this.image = source.getImage();
     }
 
 	@Override

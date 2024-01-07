@@ -1,33 +1,36 @@
 package com.android.ecommerce.model.product;
 
+import java.io.Serializable;
+
+import com.android.ecommerce.model.enumeration.Category;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "t_clothing")
 @PrimaryKeyJoinColumn(name = "id_product")
-public class Clothing extends Product {
-	
-	private static final long serialVersionUID = -4320635418373817164L;
+public class Clothing extends Product implements Serializable {
 
 	@Column(name = "stock_S")
-	@Positive
-	private int stockS;
+	@PositiveOrZero
+	private int stockS = 0;
 	
 	@Column(name = "stock_M")
-	@Positive
-	private int stockM;
+	@PositiveOrZero
+	private int stockM = 0;
 	
 	@Column(name = "stock_L")
-	@Positive
-	private int stockL;
+	@PositiveOrZero
+	private int stockL = 0 ;
 	
 	@Column(name = "stock_XL")
-	@Positive
-	private int stockXL;
+	@PositiveOrZero
+	private int stockXL = 0;
 	
 	public Clothing() {
 		super(); 
@@ -80,6 +83,7 @@ public class Clothing extends Product {
 	public Product createNewInstance() {
 		Clothing clothing = new Clothing();
 		clothing.update(this);
+		clothing.setCategory(Category.CLOTHING);
 		return clothing;
 	}
 
